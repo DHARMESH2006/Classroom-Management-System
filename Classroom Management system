@@ -1,0 +1,116 @@
+#include <iostream>
+#include <string>
+#include <vector>
+#include <algorithm>
+
+using namespace std;
+
+class Student
+{
+public:
+    Student(string name, int id)
+    {
+        this->name = name;
+        this->id = id;
+    }
+
+    string getName()
+    {
+        return name;
+    }
+
+    int getId()
+    {
+        return id;
+    }
+
+    void setName(string name)
+    {
+        this->name = name;
+    }
+
+    void setId(int id)
+    {
+        this->id = id;
+    }
+
+private:
+    string name;
+    int id;
+};
+
+class Classroom
+{
+public:
+    Classroom(string name)
+    {
+        this->name = name;
+    }
+
+    string getName()
+    {
+        return name;
+    }
+
+    void setName(string name)
+    {
+        this->name = name;
+    }
+
+    void addStudent(Student student)
+    {
+        students.push_back(student);
+    }
+
+    int getNumStudents()
+    {
+        return students.size();
+    }
+
+    Student getStudent(int index)
+    {
+        return students[index];
+    }
+
+    void sortByName()
+    {
+        sort(students.begin(), students.end(), [](Student a, Student b)
+        {
+            return a.getName() < b.getName();
+        });
+    }
+
+private:
+    string name;
+    vector<Student> students;
+};
+
+int main()
+{
+    Classroom a("CSE101");
+
+    a.addStudent(Student("Niranjan", 1));
+    a.addStudent(Student("Dharmesh", 2));
+    a.addStudent(Student("Rushit", 3));
+    a.addStudent(Student("Nisarg", 4));
+    a.addStudent(Student("Parv", 5));
+
+    cout << "There are " << a.getNumStudents() << " students in " << a.getName() << endl;
+
+    for (int i = 0; i < a.getNumStudents(); i++)
+    {
+        Student s = a.getStudent(i);
+        cout << s.getName() << " (ID: " << s.getId() << ")" << endl;
+    }
+
+    a.sortByName();
+
+    cout << "Sorted by name:" << endl;
+    for (int i = 0; i < a.getNumStudents(); i++)
+    {
+        Student s = a.getStudent(i);
+        cout << s.getName() << " (ID: " << s.getId() << ")" << endl;
+    }
+
+    return 0;
+}
